@@ -14,3 +14,33 @@ Diggerjob:
     - 50
     - 70
     - 80
+
+items:
+  citybuild:
+    material: STICK
+    slot: 11
+    name: "§dSMP"
+    lore:
+      - ""
+      - "§7Baue dein eigenes §eImperium §7mit"
+      - "§7deinen §eFreunden §7auf!"
+      - ""
+      - "§6§l➤Klicke hier!"
+    action: send_server
+    server: "smp"
+  leavebutton:
+    material: BARRIER
+    slot: 35
+    name: "§7» §cZurück"
+    lore:
+    action: close_gui
+
+
+
+
+
+#######
+# open_miner
+# open_digger
+# open_woodcutter
+######
