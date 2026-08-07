@@ -1,0 +1,16 @@
+messages:
+  prefix: "§6§lBLOCKHIVE §7»"
+
+Minerjob:
+  level:
+    - 10
+    - 50
+    - 70
+    - 80
+
+Diggerjob:
+  level:
+    - 10
+    - 50
+    - 70
+    - 80

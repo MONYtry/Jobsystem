@@ -1,0 +1,4 @@
+name: Jobsystem
+version: '1.0-SNAPSHOT'
+main: de.main.jobsystem.Jobsystem
+api-version: '1.21'
