@@ -16,18 +16,42 @@ Diggerjob:
     - 80
 
 items:
-  citybuild:
+  miner_job:
     material: STICK
     slot: 11
-    name: "§dSMP"
+    name: "§9Miner"
     lore:
       - ""
-      - "§7Baue dein eigenes §eImperium §7mit"
-      - "§7deinen §eFreunden §7auf!"
+      - "§7Zerstöre Erze, Steine und mehr"
+      - "§7und erhalte einzigartige Belohnungen"
       - ""
       - "§6§l➤Klicke hier!"
-    action: send_server
-    server: "smp"
+    action: open_miner
+
+  digger_job:
+    material: STICK
+    slot: 14
+    name: "§aGräber"
+    lore:
+      - ""
+      - "§7Zerstöre Erze, Steine und mehr"
+      - "§7und erhalte einzigartige Belohnungen"
+      - ""
+      - "§6§l➤Klicke hier!"
+    action: open_digger
+  
+  woodcutter_job:
+    material: STICK
+    slot: 16
+    name: "§6Holzfäller
+    lore:
+      - ""
+      - "§7Zerstöre Erze, Steine und mehr"
+      - "§7und erhalte einzigartige Belohnungen"
+      - ""
+      - "§6§l➤Klicke hier!"
+    action: open_woodcutter
+    
   leavebutton:
     material: BARRIER
     slot: 35
