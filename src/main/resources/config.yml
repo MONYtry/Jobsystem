@@ -18,7 +18,7 @@ Diggerjob:
 items:
   miner_job:
     material: STICK
-    slot: 11
+    slot: 13
     name: "§9Miner"
     lore:
       - ""
@@ -30,11 +30,11 @@ items:
 
   digger_job:
     material: STICK
-    slot: 14
+    slot: 15
     name: "§aGräber"
     lore:
       - ""
-      - "§7Zerstöre Erze, Steine und mehr"
+      - "§7Zerstöre Sand, Kies und mehr"
       - "§7und erhalte einzigartige Belohnungen"
       - ""
       - "§6§l➤Klicke hier!"
@@ -42,7 +42,7 @@ items:
   
   woodcutter_job:
     material: STICK
-    slot: 16
+    slot: 17
     name: "§6Holzfäller
     lore:
       - ""
