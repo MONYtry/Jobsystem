@@ -17,7 +17,7 @@ Diggerjob:
 
 items:
   miner_job:
-    material: STICK
+    material: DIAMOND_PICKAXE
     slot: 13
     name: "§9Miner"
     lore:
@@ -29,7 +29,7 @@ items:
     action: open_miner
 
   digger_job:
-    material: STICK
+    material: DIAMOND_SHOVEL
     slot: 15
     name: "§aGräber"
     lore:
@@ -41,7 +41,7 @@ items:
     action: open_digger
   
   woodcutter_job:
-    material: STICK
+    material: DIAMOND_AXE
     slot: 17
     name: "§6Holzfäller
     lore:
