@@ -1,0 +1,4 @@
+messages:
+  prefix: "§6§lBLOCKHIVE §7»"
+  forbidden: "§cDu darfst nicht im Gamemode abbauen!"
+  reload_succses: "§aConfig wurde erfolgreich reloaded!"

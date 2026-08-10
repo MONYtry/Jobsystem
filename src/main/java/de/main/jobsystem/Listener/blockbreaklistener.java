@@ -3,6 +3,7 @@ package de.main.jobsystem.Listener;
 import de.main.jobsystem.Jobsystem;
 import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,6 +45,22 @@ public class blockbreaklistener implements Listener {
         UUID uuid = p.getUniqueId();
 
 
+        FileConfiguration cfg = Jobsystem.getInstance().playerdata;
+        FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
+        String path = "players." + uuid + ".statistics.blocks." + brokenBlock.name();
+        String forbiddenMessage = cfgMessages.getString("messages.forbidden");
+
+        if (!p.getWorld().getName().equalsIgnoreCase("Farmwelt"))
+        {
+
+            return;
+        }
+
+        int amount = cfg.getInt(path,0);
+        amount++;
+
+        cfg.set(path,amount);
+        Jobsystem.getInstance().savePlayerdata();
 
         String currentJob = "";
         String displayJob = "";
@@ -68,9 +85,12 @@ public class blockbreaklistener implements Listener {
             displayJob = "Miner";
 
             FileConfiguration cfg = Jobsystem.getInstance().getConfig();
-            String prefix = cfg.getString("messages.prefix");
+            FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
+            FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
 
-            List<Integer> levels = cfg.getIntegerList("Minerjob.level");
+            String prefix = cfgMessages.getString("messages.prefix");
+
+            List<Integer> levels = cfg.getIntegerList("jobsettings.Minerjob.level");
 
             String path = "players." + uuid +"."+ currentJob;
             String xpForLevelUpConfig = path + ".xpNeeded";
@@ -80,12 +100,15 @@ public class blockbreaklistener implements Listener {
             int xpToAdd = minerBlocks.get(brokenBlock);
 
             // Aktueller Stand der XP
-            int xp = cfg.getInt(path + ".xp");
+            int xp = cfgPlayerData.getInt(path + ".xp");
+            int globalXP = cfgPlayerData.getInt(path + ".globalxp");
 
-            int currentLevel = cfg.getInt(currentLevelConfig,1);
+            int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
 
             // Aktuelle XP + XP des abgebauten Blockes
             xp += xpToAdd;
+            globalXP += xpToAdd;
+
             if (levels.isEmpty())
             {
                 p.sendMessage(prefix + "§cKein Level gefunden in Config.yml");
@@ -116,10 +139,13 @@ public class blockbreaklistener implements Listener {
 
 
             // Setzt es in den RAM
-            cfg.set(path + ".xp",xp);
-            cfg.set(currentLevelConfig,currentLevel);
+            cfgPlayerData.set(path + ".xp",xp);
+            cfgPlayerData.set(path + ".globalxp",globalXP);
+
+            cfgPlayerData.set(currentLevelConfig,currentLevel);
 
             // Setzt es auf die Festplatte
+            Jobsystem.getInstance().savePlayerdata();
             Jobsystem.getInstance().saveConfig();
 
             sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd);
@@ -132,8 +158,9 @@ public class blockbreaklistener implements Listener {
             currentJob = "Diggerjob";
             displayJob = "Gräber";
             FileConfiguration cfg = Jobsystem.getInstance().getConfig();
+            FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
             String prefix = cfg.getString("messages.prefix");
-            List<Integer> levels = cfg.getIntegerList("Diggerjob.level");
+            List<Integer> levels = cfg.getIntegerList("jobsettings.Diggerjob.level");
 
             String path = "players." + uuid +"."+ currentJob;
             String xpForLevelUpConfig = path + ".xpNeeded";
@@ -143,12 +170,15 @@ public class blockbreaklistener implements Listener {
             int xpToAdd = diggerBlocks.get(brokenBlock);
 
             // Aktueller Stand der XP
-            int xp = cfg.getInt(path + ".xp");
+            int xp = cfgPlayerData.getInt(path + ".xp");
+            int globalXP = cfgPlayerData.getInt(path + ".globalxp");
 
-            int currentLevel = cfg.getInt(currentLevelConfig,1);
+
+            int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
 
             // Aktuelle XP + XP des abgebauten Blockes
             xp += xpToAdd;
+            globalXP += xpToAdd;
             if (levels.isEmpty())
             {
                 p.sendMessage("§cKein Level gefunden in Config.yml");
@@ -179,10 +209,12 @@ public class blockbreaklistener implements Listener {
 
 
             // Setzt es in den RAM
-            cfg.set(path + ".xp",xp);
-            cfg.set(currentLevelConfig,currentLevel);
+            cfgPlayerData.set(path + ".xp",xp);
+            cfgPlayerData.set(path + ".globalxp",globalXP);
+            cfgPlayerData.set(currentLevelConfig,currentLevel);
 
             // Setzt es auf die Festplatte
+            Jobsystem.getInstance().savePlayerdata();
             Jobsystem.getInstance().saveConfig();
 
             sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd);

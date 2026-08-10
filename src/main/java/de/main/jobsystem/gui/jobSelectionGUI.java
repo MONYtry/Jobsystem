@@ -13,7 +13,7 @@ public class jobSelectionGUI {
         Inventory selectionGUI = Bukkit.createInventory(null,36,"JOBS");
 
         ItemCreator itemCreator = new ItemCreator();
-        itemCreator.autoGenItemsWithConfigGUI(selectionGUI);
+        itemCreator.autoGenItemsWithConfigGUI(selectionGUI,"selectionGUI");
 
         p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN,1,1);
         p.openInventory(selectionGUI);
