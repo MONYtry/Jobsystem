@@ -40,31 +40,37 @@ public class blockbreaklistener implements Listener {
     @EventHandler
     public void OnBlockBreak(BlockBreakEvent e)
     {
+        // Erstellt Variablen
         Material brokenBlock = e.getBlock().getType();
         Player p = e.getPlayer();
         UUID uuid = p.getUniqueId();
 
-
+        // Configs
         FileConfiguration cfg = Jobsystem.getInstance().playerdata;
         FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
         String path = "players." + uuid + ".statistics.blocks." + brokenBlock.name();
         String forbiddenMessage = cfgMessages.getString("messages.forbidden");
 
+        // Verbotene Welt
         if (!p.getWorld().getName().equalsIgnoreCase("Farmwelt"))
         {
-
             return;
         }
-
+        // Holt Anzahl aus Config
         int amount = cfg.getInt(path,0);
+        // Fügt +1 hinzu
         amount++;
 
+        // Setzt es in den RAM
         cfg.set(path,amount);
+
+        // Speichert es auf der Festplatte
         Jobsystem.getInstance().savePlayerdata();
 
         String currentJob = "";
         String displayJob = "";
 
+        // Sucht passenden Job
         if (minerBlocks.containsKey(brokenBlock))
         {
             minerJob(brokenBlock,currentJob,uuid,p,displayJob);
@@ -141,7 +147,6 @@ public class blockbreaklistener implements Listener {
             // Setzt es in den RAM
             cfgPlayerData.set(path + ".xp",xp);
             cfgPlayerData.set(path + ".globalxp",globalXP);
-
             cfgPlayerData.set(currentLevelConfig,currentLevel);
 
             // Setzt es auf die Festplatte

@@ -13,7 +13,69 @@ jobsettings:
       - 70
       - 80
 
+rewards:
+  Minerjob:
 
+    reward1:
+      level: 1
+      slot: 10
+      material: IRON_INGOT
+      name: "§f16x Eisen"
+      amount: 10
+      lore:
+        - ""
+        - "§7Belohnung für Level 1"
+        - ""
+        - "§eKlicke zum Abholen!"
+      action: claim_reward_Minerjob_1
+    reward2:
+      level: 5
+      slot: 12
+      material: DIAMOND
+      name: "§b8x Diamanten"
+      lore:
+        - ""
+        - "§7Belohnung für Level 5"
+        - ""
+        - "§eKlicke zum Abholen!"
+
+    reward3:
+      level: 10
+      slot: 14
+      material: DIAMOND_PICKAXE
+      name: "§b§lMeister Spitzhacke"
+      lore:
+        - ""
+        - "§7Belohnung für Level 10"
+        - ""
+        - "§eKlicke zum Abholen!"
+
+  Woodcutter:
+
+    reward1:
+      level: 1
+      slot: 10
+      material: OAK_LOG
+      name: "§a32x Eichenholz"
+      lore:
+        - ""
+        - "§7Belohnung für Level 1"
+        - ""
+        - "§eKlicke zum Abholen!"
+
+  Digger:
+
+    reward1:
+      level: 1
+      slot: 10
+      material: SAND
+      name: "§f32x Sand"
+      lore:
+        - ""
+        - "§7Belohnung für Level 1"
+        - ""
+        - "§eKlicke zum Abholen!"
+        -
 selectionGUI:
 
   miner_job:
@@ -83,7 +145,7 @@ Minerjob:
       - "§7Kassiere seltene Belohnungen!"
       - ""
       - "§6§l➤ Klicke hier!"
-    action: none
+    action: open_rewards_miner
 
   topranking:
     material: DIAMOND_AXE

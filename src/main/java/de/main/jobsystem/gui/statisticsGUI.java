@@ -17,14 +17,15 @@ import java.util.UUID;
 public class statisticsGUI {
 
     public static void createStaticsGUI(Player p, String job) {
+        // Leere Liste
         Material[] blocks = {};
+
         FileConfiguration cfg = Jobsystem.getInstance().playerdata;
-
         UUID uuid = p.getUniqueId();
-
         Inventory statisticsGUI = Bukkit.createInventory(null, 36, "Statistic - " + job);
-
         ItemCreator itemCreator = new ItemCreator();
+
+        // Befüllung der Liste
         if (job.equals("Miner"))
         {
             blocks = new Material[]{
@@ -36,6 +37,7 @@ public class statisticsGUI {
                     Material.DIAMOND_ORE
             };
         }
+
         if (job.equals("Woodcutter"))
         {
             blocks = new Material[]{
@@ -53,8 +55,6 @@ public class statisticsGUI {
                     Material.GRAVEL
             };
         }
-        // Alle Blöcke, die angezeigt werden sollen
-
 
         // Start-Slot
         int slot = 0;
@@ -62,18 +62,19 @@ public class statisticsGUI {
         // Geht jeden Block durch
         for (Material block : blocks) {
 
-            // Config-Pfad erstellen
+            // Erstellung des Path`s
             String path = "players." + uuid + ".statistics.blocks." + block.name();
 
-            // Anzahl aus der Config holen
+            // Holt Anzahl aus Config
             int amount = cfg.getInt(path, 0);
 
-            // Item-Name
+            // Holt Itemnamen aus Config
             String itemName = "§b" + block.name().replace("_"," ");
 
-            // Lore erstellen
+            // Erstellt leere Lore
             List<String> lore = new ArrayList<>();
 
+            // Lore Befüllen
             lore.add("");
             lore.add("§7Abgebaut: §e" + amount);
             lore.add("");
