@@ -21,6 +21,7 @@ public class reloadConfig implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("reloadconfig"))
         {
             Jobsystem.getInstance().reloadConfig();
+            Jobsystem.getInstance().savePlayerdata();
             sender.sendMessage(prefix + succsessfullyReloaded);
         }
         return true;

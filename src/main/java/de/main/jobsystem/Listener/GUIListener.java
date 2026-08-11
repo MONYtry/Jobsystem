@@ -1,6 +1,7 @@
 package de.main.jobsystem.Listener;
 
 import de.main.jobsystem.Jobsystem;
+import de.main.jobsystem.gui.boosterGUI;
 import de.main.jobsystem.gui.jobGUI;
 import de.main.jobsystem.gui.rewardGUI;
 import de.main.jobsystem.gui.statisticsGUI;
@@ -90,6 +91,10 @@ public class GUIListener implements Listener {
                 p.getInventory().close();
                 rewardGUI.createRewardGUI(p,"Minerjob");
                 break;
+            case ("open_booster"):
+                p.getInventory().close();
+                boosterGUI.createBoosterGUI(p);
+
             default:
                 if (action.startsWith("claim_reward_"))
                 {

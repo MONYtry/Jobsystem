@@ -122,6 +122,22 @@ selectionGUI:
       - ""
     action: close_gui
 
+  boosterButton:
+    material: PAPER
+    slot: 30
+    name: "§aBOOSTER"
+    lore:
+      - ""
+    action: open_booster
+
+boosterGUI:
+  boosterButton:
+    material: PAPER
+    slot: 13
+    name: "§aBOOSTER"
+    lore:
+      - ""
+    action: open_booster
 
 Minerjob:
 
@@ -256,9 +272,11 @@ Woodcutter:
 
 
 
+
 # ######
 # open_miner
 # open_digger
 # open_woodcutter
 # open_statistics
+# open_booster
 # #####

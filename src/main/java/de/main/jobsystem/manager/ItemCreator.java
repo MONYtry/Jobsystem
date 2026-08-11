@@ -105,7 +105,6 @@ public class ItemCreator {
         }
     }
 
-
     private List<String> getTop10Lore(String job) {
 
         FileConfiguration config = Jobsystem.getInstance().playerdata;

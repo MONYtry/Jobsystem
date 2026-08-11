@@ -9,3 +9,6 @@ commands:
   reloadconfig:
     usage: reloadconfig
     description: "reloadconfig"
+  booster:
+    usage: booster
+    description: "Gibt booster"
