@@ -12,6 +12,7 @@ jobsettings:
       - 50
       - 70
       - 80
+booster:
 
 rewards:
   Minerjob:
@@ -20,35 +21,35 @@ rewards:
       level: 1
       slot: 10
       material: IRON_INGOT
-      name: "§f16x Eisen"
+      name: §f16x Eisen
       amount: 10
       lore:
-        - ""
-        - "§7Belohnung für Level 1"
-        - ""
-        - "§eKlicke zum Abholen!"
+        - ''
+        - §7Belohnung für Level 1
+        - ''
+        - §eKlicke zum Abholen!
       action: claim_reward_Minerjob_1
     reward2:
       level: 5
       slot: 12
       material: DIAMOND
-      name: "§b8x Diamanten"
+      name: §b8x Diamanten
       lore:
-        - ""
-        - "§7Belohnung für Level 5"
-        - ""
-        - "§eKlicke zum Abholen!"
+        - ''
+        - §7Belohnung für Level 5
+        - ''
+        - §eKlicke zum Abholen!
 
     reward3:
       level: 10
       slot: 14
       material: DIAMOND_PICKAXE
-      name: "§b§lMeister Spitzhacke"
+      name: §b§lMeister Spitzhacke
       lore:
-        - ""
-        - "§7Belohnung für Level 10"
-        - ""
-        - "§eKlicke zum Abholen!"
+        - ''
+        - §7Belohnung für Level 10
+        - ''
+        - §eKlicke zum Abholen!
 
   Woodcutter:
 
@@ -56,12 +57,12 @@ rewards:
       level: 1
       slot: 10
       material: OAK_LOG
-      name: "§a32x Eichenholz"
+      name: §a32x Eichenholz
       lore:
-        - ""
-        - "§7Belohnung für Level 1"
-        - ""
-        - "§eKlicke zum Abholen!"
+        - ''
+        - §7Belohnung für Level 1
+        - ''
+        - §eKlicke zum Abholen!
 
   Digger:
 
@@ -69,117 +70,137 @@ rewards:
       level: 1
       slot: 10
       material: SAND
-      name: "§f32x Sand"
+      name: §f32x Sand
       lore:
-        - ""
-        - "§7Belohnung für Level 1"
-        - ""
-        - "§eKlicke zum Abholen!"
-        -
+        - ''
+        - §7Belohnung für Level 1
+        - ''
+        - §eKlicke zum Abholen!
+        - null
 selectionGUI:
 
   miner_job:
     material: DIAMOND_PICKAXE
     slot: 10
-    name: "§9Miner"
+    name: §9Miner
     lore:
-      - ""
-      - "§7Zerstöre Erze, Steine und mehr"
-      - "§7und erhalte einzigartige Belohnungen"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Zerstöre Erze, Steine und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_miner
 
   digger_job:
     material: DIAMOND_SHOVEL
     slot: 13
-    name: "§aGräber"
+    name: §aGräber
     lore:
-      - ""
-      - "§7Zerstöre Sand, Kies und mehr"
-      - "§7und erhalte einzigartige Belohnungen"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Zerstöre Sand, Kies und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_digger
 
   woodcutter_job:
     material: DIAMOND_AXE
     slot: 16
-    name: "§6Holzfäller"
+    name: §6Holzfäller
     lore:
-      - ""
-      - "§7Fälle Bäume und mehr"
-      - "§7und erhalte einzigartige Belohnungen"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Fälle Bäume und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_woodcutter
 
   leavebutton:
     material: BARRIER
     slot: 35
-    name: "§7» §cZurück"
+    name: §7» §cZurück
     lore:
-      - ""
+      - ''
     action: close_gui
 
   boosterButton:
     material: PAPER
-    slot: 30
-    name: "§aBOOSTER"
+    slot: 31
+    name: §aBooster Infomationen
     lore:
-      - ""
+      - ''
+      - §7Benutze Booster um mehr
+      - §eLevel §7& §eGeld §7zu erhalten!
     action: open_booster
 
 boosterGUI:
-  boosterButton:
-    material: PAPER
+  boosterInfomation:
+    material: GLOWSTONE_DUST
     slot: 13
-    name: "§aBOOSTER"
+    name: §aBooster Inventar
     lore:
-      - ""
-    action: open_booster
+      - ''
+      - '§7Deine Booster:'
+    action: start_booster_xp
+
+  boosterStartenGUI:
+    material: GLOWSTONE_DUST
+    slot: 10
+    name: §aBooster hinzufügen
+    lore:
+    action: open_start_booster
+
+
+  currentBoosterItem:
+    material: PAPER
+    slot: 17
+    name: §eAktive Booster
+    lore:
+      - ''
+    action: none
+
 
 Minerjob:
 
   statistics:
     material: PAPER
     slot: 10
-    name: "§6Statistiken"
+    name: §6Statistiken
     lore:
-      - ""
-      - "§7Schau dir deine Statistiken an."
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_statistics
 
   rewards:
     material: MINECART
     slot: 13
-    name: "§aBelohnungen"
+    name: §aBelohnungen
     lore:
-      - ""
-      - "§7Kassiere seltene Belohnungen!"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_rewards_miner
 
   topranking:
     material: DIAMOND_AXE
     slot: 16
-    name: "§6Rangliste"
+    name: §6Rangliste
     lore:
-      - ""
-      - "§7Top 10 Spieler"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
     ranking: Minerjob
 
   leavebutton:
     material: BARRIER
     slot: 35
-    name: "§7» §cZurück"
+    name: §7» §cZurück
     lore:
-      - ""
+      - ''
     action: close_gui
 
 
@@ -188,42 +209,42 @@ Digger:
   statistics:
     material: PAPER
     slot: 10
-    name: "§6Statistiken"
+    name: §6Statistiken
     lore:
-      - ""
-      - "§7Schau dir deine Statistiken an."
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_statistics
 
   rewards:
     material: MINECART
     slot: 13
-    name: "§aBelohnungen"
+    name: §aBelohnungen
     lore:
-      - ""
-      - "§7Kassiere seltene Belohnungen!"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
     action: none
 
   topranking:
     material: DIAMOND_AXE
     slot: 16
-    name: "§6Rangliste"
+    name: §6Rangliste
     lore:
-      - ""
-      - "§7Top 10 Spieler"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
     ranking: Diggerjob
 
   leavebutton:
     material: BARRIER
     slot: 35
-    name: "§7» §cZurück"
+    name: §7» §cZurück
     lore:
-      - ""
+      - ''
     action: close_gui
 
 
@@ -232,42 +253,42 @@ Woodcutter:
   statistics:
     material: PAPER
     slot: 10
-    name: "§6Statistiken"
+    name: §6Statistiken
     lore:
-      - ""
-      - "§7Schau dir deine Statistiken an."
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
     action: open_statistics
 
   rewards:
     material: MINECART
     slot: 13
-    name: "§aBelohnungen"
+    name: §aBelohnungen
     lore:
-      - ""
-      - "§7Kassiere seltene Belohnungen!"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
     action: none
 
   topranking:
     material: DIAMOND_AXE
     slot: 16
-    name: "§eRangliste - Top 10 "
+    name: '§eRangliste - Top 10 '
     lore:
-      - ""
-      - "§7Top 10 Spieler"
-      - ""
-      - "§6§l➤ Klicke hier!"
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
     ranking: Woodcutter
 
   leavebutton:
     material: BARRIER
     slot: 35
-    name: "§7» §cZurück"
+    name: §7» §cZurück
     lore:
-      - ""
+      - ''
     action: close_gui
 
 
@@ -279,4 +300,5 @@ Woodcutter:
 # open_woodcutter
 # open_statistics
 # open_booster
+# open_start_booster
 # #####

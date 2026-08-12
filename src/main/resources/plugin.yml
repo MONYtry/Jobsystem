@@ -6,9 +6,3 @@ commands:
   job:
     usage: job
     description: "Opens Job GUI"
-  reloadconfig:
-    usage: reloadconfig
-    description: "reloadconfig"
-  booster:
-    usage: booster
-    description: "Gibt booster"

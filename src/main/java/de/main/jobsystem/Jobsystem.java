@@ -2,9 +2,7 @@ package de.main.jobsystem;
 
 import de.main.jobsystem.Listener.blockbreaklistener;
 import de.main.jobsystem.Listener.GUIListener;
-import de.main.jobsystem.commands.giveBooster;
 import de.main.jobsystem.commands.jobCommand;
-import de.main.jobsystem.commands.reloadConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -49,8 +47,8 @@ public final class Jobsystem extends JavaPlugin {
 
         // COMMANDS
         getCommand("job").setExecutor(new jobCommand());
-        getCommand("reloadconfig").setExecutor(new reloadConfig());
-        getCommand("booster").setExecutor(new giveBooster());
+
+
 
     }
 

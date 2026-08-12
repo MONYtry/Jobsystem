@@ -101,9 +101,17 @@ public class blockbreaklistener implements Listener {
             String path = "players." + uuid +"."+ currentJob;
             String xpForLevelUpConfig = path + ".xpNeeded";
             String currentLevelConfig = path + ".level";
+            String currentBoosterPath = "booster.active";
+            List<String> currentBooster = cfg.getStringList(currentBoosterPath);
 
             // XP des abgebauten Blockes
             int xpToAdd = minerBlocks.get(brokenBlock);
+
+            int boosterMultiplikator = 1;
+            if (currentBooster.contains("xp"))
+            {
+                boosterMultiplikator = 2;
+            }
 
             // Aktueller Stand der XP
             int xp = cfgPlayerData.getInt(path + ".xp");
@@ -112,7 +120,7 @@ public class blockbreaklistener implements Listener {
             int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
 
             // Aktuelle XP + XP des abgebauten Blockes
-            xp += xpToAdd;
+            xp += xpToAdd * boosterMultiplikator;
             globalXP += xpToAdd;
 
             if (levels.isEmpty())
@@ -153,7 +161,7 @@ public class blockbreaklistener implements Listener {
             Jobsystem.getInstance().savePlayerdata();
             Jobsystem.getInstance().saveConfig();
 
-            sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd);
+            sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd * boosterMultiplikator);
         }
     }
     private void diggerJob(Material brokenBlock,String currentJob,UUID uuid,Player p,String displayJob)

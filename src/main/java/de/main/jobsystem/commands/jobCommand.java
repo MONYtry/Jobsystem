@@ -22,24 +22,54 @@ public class jobCommand implements CommandExecutor {
                 jobSelectionGUI.createSelectionGUI(p);
                 return true;
             }
+
             if (args[0].equalsIgnoreCase("booster"))
             {
-                giveBooster(p,1);
+                if (args.length < 2 || args[1].isBlank())
+                {
+                    p.sendMessage("Benutze /job booster <xp|geld>");
+                    return true;
+                }
+                if (args[1].equalsIgnoreCase("xp"))
+                {
+                    giveBooster(p,1,"xp");
+                }
+                else
+                {
+                    giveBooster(p,1,"geld");
+                }
+            }
+
+            if (args[0].equalsIgnoreCase("reload"))
+            {
+                reloadConfig(p);
             }
         }
         return true;
     }
 
+    private void reloadConfig(Player p)
+    {
+        FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
+        String prefix = cfgMessages.getString("messages.prefix");
+        String succsessfullyReloaded = cfgMessages.getString("messages.reload_succses");
 
-    private void giveBooster(Player p,int amount)
+        Jobsystem.getInstance().reloadConfig();
+        Jobsystem.getInstance().savePlayerdata();
+        p.sendMessage(prefix + succsessfullyReloaded);
+    }
+
+    private void giveBooster(Player p,int amount,String boosterName)
     {
         FileConfiguration playerData = Jobsystem.getInstance().playerdata;
-        String boosterPath = "players." + p.getUniqueId() + ".booster";
+
+        String boosterPath = "players." + p.getUniqueId() + ".booster." + boosterName;
+
         int booster = playerData.getInt(boosterPath,0);
-
         booster += amount;
-        p.sendMessage("Du hast " + booster + " Booster erhalten");
 
+        p.sendMessage("§9Du hast " + amount + " Booster erhalten");
+        p.sendMessage("§9Gesamt "+ boosterName +"-Booster: " + booster);
 
         playerData.set(boosterPath,booster);
         Jobsystem.getInstance().savePlayerdata();

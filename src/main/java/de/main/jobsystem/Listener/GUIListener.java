@@ -1,6 +1,7 @@
 package de.main.jobsystem.Listener;
 
 import de.main.jobsystem.Jobsystem;
+import de.main.jobsystem.booster.booster;
 import de.main.jobsystem.gui.boosterGUI;
 import de.main.jobsystem.gui.jobGUI;
 import de.main.jobsystem.gui.rewardGUI;
@@ -30,7 +31,9 @@ public class GUIListener implements Listener {
                 e.getView().getTitle().equalsIgnoreCase("Statistic - Miner - GUI") ||
                 e.getView().getTitle().equalsIgnoreCase("Statistic - Woodcutter") ||
                 e.getView().getTitle().equalsIgnoreCase("Statistic - Digger") ||
-                e.getView().getTitle().equalsIgnoreCase("§6Rewards - Minerjob")
+                e.getView().getTitle().equalsIgnoreCase("§6Rewards - Minerjob") ||
+                e.getView().getTitle().equalsIgnoreCase("Booster")
+
 
         )
         {
@@ -94,7 +97,15 @@ public class GUIListener implements Listener {
             case ("open_booster"):
                 p.getInventory().close();
                 boosterGUI.createBoosterGUI(p);
-
+                break;
+            case ("start_booster_xp"):
+                p.getInventory().close();
+                booster.startBooster(p,"xp");
+                break;
+            case ("start_booster_geld"):
+                p.getInventory().close();
+                booster.startBooster(p,"geld");
+                break;
             default:
                 if (action.startsWith("claim_reward_"))
                 {
