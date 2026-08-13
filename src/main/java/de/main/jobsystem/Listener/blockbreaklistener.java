@@ -94,6 +94,7 @@ public class blockbreaklistener implements Listener {
             FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
             FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
 
+            String no_level_found = cfgMessages.getString("messages.no_config_found_error");
             String prefix = cfgMessages.getString("messages.prefix");
 
             List<Integer> levels = cfg.getIntegerList("jobsettings.Minerjob.level");
@@ -125,7 +126,7 @@ public class blockbreaklistener implements Listener {
 
             if (levels.isEmpty())
             {
-                p.sendMessage(prefix + "§cKein Level gefunden in Config.yml");
+                p.sendMessage(prefix + no_level_found);
                 return;
             }
             // Holt sich aus dem Array die needed XP
@@ -168,11 +169,16 @@ public class blockbreaklistener implements Listener {
     {
         if (diggerBlocks.containsKey(brokenBlock))
         {
+
             currentJob = "Diggerjob";
             displayJob = "Gräber";
             FileConfiguration cfg = Jobsystem.getInstance().getConfig();
             FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
+            FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
+
             String prefix = cfg.getString("messages.prefix");
+            String no_level_found = cfgMessages.getString("messages.no_config_found_error");
+
             List<Integer> levels = cfg.getIntegerList("jobsettings.Diggerjob.level");
 
             String path = "players." + uuid +"."+ currentJob;
@@ -194,7 +200,7 @@ public class blockbreaklistener implements Listener {
             globalXP += xpToAdd;
             if (levels.isEmpty())
             {
-                p.sendMessage("§cKein Level gefunden in Config.yml");
+                p.sendMessage(no_level_found);
                 return;
             }
             // Holt sich aus dem Array die needed XP

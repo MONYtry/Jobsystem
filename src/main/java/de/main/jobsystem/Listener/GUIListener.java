@@ -102,6 +102,10 @@ public class GUIListener implements Listener {
                 p.getInventory().close();
                 booster.startBooster(p,"xp");
                 break;
+            case ("open_add_booster"):
+                p.getInventory().close();
+                boosterGUI.createBoosterAddGUI(p);
+                break;
             case ("start_booster_geld"):
                 p.getInventory().close();
                 booster.startBooster(p,"geld");

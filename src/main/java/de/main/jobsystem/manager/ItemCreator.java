@@ -24,7 +24,7 @@ public class ItemCreator {
     public void autoGenItemsWithConfigGUI(Inventory inventoryToUse,String categoryName)
     {
         // selectionGUI
-        FileConfiguration cfg = Jobsystem.getInstance().getConfig();
+        FileConfiguration cfg = Jobsystem.getInstance().gui;
 
         // Schau Config macht Sinn :)
         ConfigurationSection items = cfg.getConfigurationSection(categoryName);
@@ -104,6 +104,11 @@ public class ItemCreator {
             inventoryToUse.setItem(slot, item);
         }
     }
+
+
+
+
+
 
     private List<String> getTop10Lore(String job) {
 

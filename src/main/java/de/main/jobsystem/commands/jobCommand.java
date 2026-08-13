@@ -2,8 +2,6 @@ package de.main.jobsystem.commands;
 
 import de.main.jobsystem.Jobsystem;
 import de.main.jobsystem.gui.jobSelectionGUI;
-import de.main.jobsystem.manager.ItemCreator;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -51,11 +49,15 @@ public class jobCommand implements CommandExecutor {
     private void reloadConfig(Player p)
     {
         FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
+
+
         String prefix = cfgMessages.getString("messages.prefix");
         String succsessfullyReloaded = cfgMessages.getString("messages.reload_succses");
 
         Jobsystem.getInstance().reloadConfig();
         Jobsystem.getInstance().savePlayerdata();
+        Jobsystem.getInstance().reloadGUI();
+
         p.sendMessage(prefix + succsessfullyReloaded);
     }
 

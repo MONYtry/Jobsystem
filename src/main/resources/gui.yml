@@ -1,0 +1,259 @@
+# MADE BY MONY
+# --------------  JOB SELECTION GUI -------------- #
+selectionGUI:
+  miner_job:
+    material: DIAMOND_PICKAXE
+    slot: 10
+    name: §9Miner
+    lore:
+      - ''
+      - §7Zerstöre Erze, Steine und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_miner
+
+  digger_job:
+    material: DIAMOND_SHOVEL
+    slot: 13
+    name: §aGräber
+    lore:
+      - ''
+      - §7Zerstöre Sand, Kies und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_digger
+
+  woodcutter_job:
+    material: DIAMOND_AXE
+    slot: 16
+    name: §6Holzfäller
+    lore:
+      - ''
+      - §7Fälle Bäume und mehr
+      - §7und erhalte einzigartige Belohnungen
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_woodcutter
+
+  leavebutton:
+    material: BARRIER
+    slot: 35
+    name: §7» §cZurück
+    lore:
+      - ''
+    action: close_gui
+
+  boosterButton:
+    material: PAPER
+    slot: 31
+    name: §aBooster Infomationen
+    lore:
+      - ''
+      - §7Benutze Booster um mehr
+      - §eLevel §7& §eGeld §7zu erhalten!
+    action: open_booster
+
+
+
+# --------------  BOOSTER INVENTORY GUI -------------- #
+boosterGUI:
+  boosterInfomation:
+    material: GLOWSTONE_DUST
+    slot: 13
+    name: §e✦ Booster Inventar
+    lore:
+      - ''
+      - §7Hier findest du deine aktuell
+      - §7verfügbaren und aktiven Booster.
+      - ''
+      - §8➜ Wähle einen Booster aus
+    action: none
+
+  boosterStartenGUI:
+    material: NETHER_STAR
+    slot: 10
+    name: §a✦ Booster aktivieren
+    lore:
+      - ''
+      - §7Starte hier einen neuen Booster
+      - §7und erhalte zusätzliche Vorteile!
+      - ''
+      - §6➤ Klicke hier!
+    action: open_add_booster
+
+  currentBoosterItem:
+    material: NETHER_STAR
+    slot: 15
+    name: §e✦ Aktive Booster
+    lore:
+      - ''
+      - §7Hier werden deine aktuell
+      - §7laufenden Booster angezeigt.
+      - ''
+    action: none
+
+
+# --------------  BOOSTER ADDING GUI -------------- #
+addBoosterGUI:
+  add_booster_button_xp:
+    material: EXPERIENCE_BOTTLE
+    slot: 11
+    name: §b✦ XP Booster
+    lore:
+      - ''
+      - §7Erhalte mehr §bXP §7bei deinen
+      - §7Job-Aktionen.
+      - ''
+      - §a➤ Klicke zum Aktivieren!
+    action: start_booster_xp
+
+  add_booster_button_geld:
+    material: GOLD_INGOT
+    slot: 15
+    name: §6✦ Geld Booster
+    lore:
+      - ''
+      - §7Erhalte mehr §6Geld §7bei deinen
+      - §7Job-Aktionen.
+      - ''
+      - §a➤ Klicke zum Aktivieren!
+    action: start_booster_geld
+
+  currentBoosterItem:
+    material: NETHER_STAR
+    slot: 22
+    name: §e✦ Aktive Booster
+    lore:
+      - ''
+      - §7Hier werden deine aktuell
+      - §7laufenden Booster angezeigt.
+      - ''
+    action: none
+
+# --------------  MINER JOB GUI -------------- #
+Minerjob:
+  statistics:
+    material: PAPER
+    slot: 10
+    name: §6Statistiken
+    lore:
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_statistics
+
+  rewards:
+    material: MINECART
+    slot: 13
+    name: §aBelohnungen
+    lore:
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_rewards_miner
+
+  topranking:
+    material: DIAMOND_AXE
+    slot: 16
+    name: §6Rangliste
+    lore:
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
+    ranking: Minerjob
+
+  leavebutton:
+    material: BARRIER
+    slot: 35
+    name: §7» §cZurück
+    lore:
+    action: close_gui
+
+# --------------  DIGGER JOB GUI -------------- #
+Digger:
+  statistics:
+    material: PAPER
+    slot: 10
+    name: §6Statistiken
+    lore:
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_statistics
+
+  rewards:
+    material: MINECART
+    slot: 13
+    name: §aBelohnungen
+    lore:
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
+    action: none
+
+  topranking:
+    material: DIAMOND_AXE
+    slot: 16
+    name: §6Rangliste
+    lore:
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
+    ranking: Diggerjob
+
+  leavebutton:
+    material: BARRIER
+    slot: 35
+    name: §7» §cZurück
+    lore:
+    action: close_gui
+
+# --------------  WOODCUTTER JOB GUI -------------- #
+Woodcutter:
+  statistics:
+    material: PAPER
+    slot: 10
+    name: §6Statistiken
+    lore:
+      - ''
+      - §7Schau dir deine Statistiken an.
+      - ''
+      - §6§l➤ Klicke hier!
+    action: open_statistics
+
+  rewards:
+    material: MINECART
+    slot: 13
+    name: §aBelohnungen
+    lore:
+      - ''
+      - §7Kassiere seltene Belohnungen!
+      - ''
+      - §6§l➤ Klicke hier!
+    action: none
+
+  topranking:
+    material: DIAMOND_AXE
+    slot: 16
+    name: '§eRangliste - Top 10 '
+    lore:
+      - ''
+      - §7Top 10 Spieler
+      - ''
+      - §6§l➤ Klicke hier!
+    ranking: Woodcutter
+
+  leavebutton:
+    material: BARRIER
+    slot: 35
+    name: §7» §cZurück
+    lore:
+    action: close_gui

@@ -45,7 +45,7 @@ public class rewardGUI {
             int rewardLevel = cfg.getInt(path + ".level");
 
             String rewardDataPath = "players." + p.getUniqueId() + "." + job + ".rewards." + rewardLevel;
-            boolean alreadyClaimed = cfgPlayerData.getBoolean(rewardDataPath,false);
+            boolean alreadyClaimed = cfgPlayerData.getBoolean(rewardDataPath, false);
 
             int slot = cfg.getInt(path + ".slot");
 
@@ -57,56 +57,57 @@ public class rewardGUI {
 
             String action = cfg.getString(path + ".action");
 
-            if (alreadyClaimed)
-            {
+            if (alreadyClaimed) {
                 lore.add("");
-                lore.add("§a✔ Bereits eingesammelt!");
+                lore.add("§c✔ Bereits eingesammelt!");
 
                 action = "null";
             }
-
+            // Wenn Spieler Level erreicht oder übertrifft und es noch nicht eingesammelt hat
             if (playerLevel >= rewardLevel && !alreadyClaimed) {
 
                 lore.add("");
-                lore.add("§a✔ Du kannst diese Belohnung abholen!");
+                lore.add("§eBereit zum einsammeln");
 
-            } else {
+            }
+            if (playerLevel < rewardLevel && !alreadyClaimed)
+                {
 
-                lore.add("");
-                lore.add("§c🔒 Benötigt Level §e" + rewardLevel);
+                    lore.add("");
+                    lore.add("§c🔒 Benötigt Level §e" + rewardLevel);
 
-                lore.add("§7Dein Level: §e" + playerLevel);
+                    lore.add("§7Dein Level: §e" + playerLevel);
 
-                // Action entfernen
-                action = "null";
+                    // Action entfernen
+                    action = "null";
+                }
+
+                Material material;
+
+                try {
+                    material = Material.valueOf(materialName.toUpperCase());
+
+                } catch (Exception e) {
+
+                    material = Material.STONE;
+
+                    Bukkit.getLogger().warning("Ungültiges Material: " + materialName);
+                }
+
+                itemCreator.createItemWith(
+                        material,
+                        name,
+                        lore,
+                        slot,
+                        p,
+                        inventory,
+                        false,
+                        action
+                );
             }
 
-            Material material;
+            p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
 
-            try {
-                material = Material.valueOf(materialName.toUpperCase());
-
-            } catch (Exception e) {
-
-                material = Material.STONE;
-
-                Bukkit.getLogger().warning("Ungültiges Material: " + materialName);
-            }
-
-            itemCreator.createItemWith(
-                    material,
-                    name,
-                    lore,
-                    slot,
-                    p,
-                    inventory,
-                    false,
-                    action
-            );
+            p.openInventory(inventory);
         }
-
-        p.playSound(p.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
-
-        p.openInventory(inventory);
     }
-}

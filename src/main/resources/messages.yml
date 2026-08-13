@@ -2,3 +2,6 @@ messages:
   prefix: "§6§lBLOCKHIVE §7»"
   forbidden: "§cDu darfst nicht im Gamemode abbauen!"
   reload_succses: "§aConfig wurde erfolgreich reloaded!"
+  current_booster_active: "Folgende Booster sind aktiviert:"
+  no_config_found_error: "Es wurde keine Config.yml gefunden!"
+  following_booster: "§eFolgende Booster sind aktiv:"
