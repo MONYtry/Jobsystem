@@ -6,3 +6,8 @@ commands:
   job:
     usage: job
     description: "Opens Job GUI"
+
+permissions:
+  job.admin:
+    description: Enthält alle Rechte
+    default: op

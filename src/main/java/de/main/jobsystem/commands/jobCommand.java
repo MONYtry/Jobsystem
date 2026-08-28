@@ -2,6 +2,7 @@ package de.main.jobsystem.commands;
 
 import de.main.jobsystem.Jobsystem;
 import de.main.jobsystem.gui.jobSelectionGUI;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,24 +21,40 @@ public class jobCommand implements CommandExecutor {
                 jobSelectionGUI.createSelectionGUI(p);
                 return true;
             }
-
-            if (args[0].equalsIgnoreCase("booster"))
+            // Booster vergeben
+            if (args[0].equalsIgnoreCase("booster") && p.hasPermission("job.admin"))
             {
                 if (args.length < 2 || args[1].isBlank())
                 {
-                    p.sendMessage("Benutze /job booster <xp|geld>");
+                    p.sendMessage("Benutze /job booster give <Spieler> xp|geld");
                     return true;
                 }
-                if (args[1].equalsIgnoreCase("xp"))
+                if (args[1].equalsIgnoreCase("give"))
                 {
-                    giveBooster(p,1,"xp");
-                }
-                else
-                {
-                    giveBooster(p,1,"geld");
+                    if (!args[2].isEmpty()) {
+
+                        Player target = Bukkit.getPlayer(args[2]);
+
+                        if (target == null) {
+                            p.sendMessage("§cDer Spieler konnte nicht gefunden werden!");
+                            return true;
+                        }
+
+                        if (args[3].equalsIgnoreCase("xp"))
+                        {
+                            giveBooster(target,1,"xp");
+                        }
+                        if (args[3].equalsIgnoreCase("geld"))
+                        {
+                            giveBooster(target,1,"geld");
+                        }
+                    }
                 }
             }
-
+            else
+            {
+                p.sendMessage("§cDu hast keine Berechtigung für diesen Command!");
+            }
             if (args[0].equalsIgnoreCase("reload"))
             {
                 reloadConfig(p);

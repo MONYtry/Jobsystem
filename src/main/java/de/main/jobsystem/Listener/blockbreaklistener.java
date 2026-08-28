@@ -1,9 +1,7 @@
 package de.main.jobsystem.Listener;
 
 import de.main.jobsystem.Jobsystem;
-import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -11,28 +9,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class blockbreaklistener implements Listener {
-    private final Map<Material,Integer> minerBlocks = Map.of(
-            Material.STONE,1,
-            Material.DEEPSLATE,1,
-            Material.COAL_ORE,2,
-            Material.IRON_ORE,2,
-            Material.GOLD_ORE,2,
-            Material.DIAMOND_ORE,2
+    private final Map<Material,double[]> minerBlocks = Map.of(
+            Material.STONE,new double[]{1,1},
+            Material.DEEPSLATE,new double[]{1,1},
+            Material.COAL_ORE,new double[]{1,1},
+            Material.DIRT,new double[]{1,1}
     );
 
-    private final Map<Material,Integer> diggerBlocks = Map.of(
-            Material.SAND,1,
-            Material.GRAVEL,5,
-            Material.GRASS_BLOCK,2,
-            Material.DIRT,1
+    private final Map<Material,double[]> diggerBlocks = Map.of(
+            Material.SAND,new double[]{1,1},
+            Material.GRAVEL,new double[]{1,1},
+            Material.GRASS_BLOCK,new double[]{1,1},
+            Material.DIRT,new double[]{1,1}
+    );
+
+    private final Map<Material,double[]> woodcutterBlocks = Map.of(
+            Material.OAK_LOG,new double[]{1,1}
     );
 
 
@@ -79,6 +76,10 @@ public class blockbreaklistener implements Listener {
         {
             diggerJob(brokenBlock,currentJob,uuid,p,displayJob);
         }
+        if (woodcutterBlocks.containsKey(brokenBlock))
+        {
+            woodCutter(brokenBlock,currentJob,uuid,p,displayJob);
+        }
 
     }
 
@@ -94,19 +95,27 @@ public class blockbreaklistener implements Listener {
             FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
             FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
 
+
             String no_level_found = cfgMessages.getString("messages.no_config_found_error");
             String prefix = cfgMessages.getString("messages.prefix");
 
-            List<Integer> levels = cfg.getIntegerList("jobsettings.Minerjob.level");
+            List<Integer> levels = cfg.getIntegerList("jobsettings." + currentJob + ".level");
 
             String path = "players." + uuid +"."+ currentJob;
             String xpForLevelUpConfig = path + ".xpNeeded";
             String currentLevelConfig = path + ".level";
             String currentBoosterPath = "booster.active";
+            String brokenBlocksPath = path + ".brokenblocks";
+
             List<String> currentBooster = cfg.getStringList(currentBoosterPath);
 
             // XP des abgebauten Blockes
-            int xpToAdd = minerBlocks.get(brokenBlock);
+            double[] reward = minerBlocks.get(brokenBlock);
+
+            int xpToAdd = (int) reward[0];
+
+
+            double brokenBlocks = cfgPlayerData.getDouble(brokenBlocksPath);
 
             int boosterMultiplikator = 1;
             if (currentBooster.contains("xp"))
@@ -119,6 +128,112 @@ public class blockbreaklistener implements Listener {
             int globalXP = cfgPlayerData.getInt(path + ".globalxp");
 
             int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
+
+            // Geld abhängig vom aktuellen Level
+            double moneyToAdd = cfg.getDouble("jobsettings." + currentJob + ".money." + currentLevel, 0.0);
+            if (currentBooster.contains("geld"))
+            {
+                moneyToAdd *= 2;
+            }
+
+            // Aktuelle XP + XP des abgebauten Blockes
+            xp += xpToAdd * boosterMultiplikator;
+            globalXP += xpToAdd;
+
+            if (levels.isEmpty())
+            {
+                p.sendMessage(prefix + no_level_found);
+                return;
+            }
+            // Holt sich aus dem Array die needed XP
+            int xpNeeded = levels.get(currentLevel - 1);
+
+            // Falls genug XP für ein Levelup da sind
+            if (xp >= xpNeeded)
+            {
+                if (currentLevel < levels.size())
+                {
+                    currentLevel += 1;
+                    xp = 0;
+
+                    xpNeeded = levels.get(currentLevel - 1);
+                    sendLevelUp(p,currentLevel,currentJob,prefix);
+                }
+                else
+                {
+                    // Max Level erreicht!
+                    xp = xpNeeded;
+                }
+
+            }
+
+            brokenBlocks += 1;
+
+            // Setzt es in den RAM
+            cfgPlayerData.set(path + ".xp",xp);
+            cfgPlayerData.set(path + ".globalxp",globalXP);
+            cfgPlayerData.set(currentLevelConfig,currentLevel);
+            cfgPlayerData.set(brokenBlocksPath,brokenBlocks);
+
+            // Setzt es auf die Festplatte
+            Jobsystem.getInstance().savePlayerdata();
+            Jobsystem.getInstance().saveConfig();
+
+            sendActionbar(p,xp,xpNeeded,moneyToAdd,currentLevel,displayJob,xpToAdd * boosterMultiplikator);
+        }
+    }
+
+    private void woodCutter(Material brokenBlock,String currentJob,UUID uuid,Player p,String displayJob)
+    {
+        if (woodcutterBlocks.containsKey(brokenBlock))
+        {
+
+            currentJob = "Woodcutter";
+            displayJob = "Holzfäller";
+
+            FileConfiguration cfg = Jobsystem.getInstance().getConfig();
+            FileConfiguration cfgPlayerData = Jobsystem.getInstance().playerdata;
+            FileConfiguration cfgMessages = Jobsystem.getInstance().messages;
+
+
+            String no_level_found = cfgMessages.getString("messages.no_config_found_error");
+            String prefix = cfgMessages.getString("messages.prefix");
+
+            List<Integer> levels = cfg.getIntegerList("jobsettings." + currentJob + ".level");
+
+            String path = "players." + uuid +"."+ currentJob;
+            String xpForLevelUpConfig = path + ".xpNeeded";
+            String currentLevelConfig = path + ".level";
+            String currentBoosterPath = "booster.active";
+            String brokenBlocksPath = path + ".brokenblocks";
+
+            List<String> currentBooster = cfg.getStringList(currentBoosterPath);
+
+            // XP des abgebauten Blockes
+            double[] reward = woodcutterBlocks.get(brokenBlock);
+
+            int xpToAdd = (int) reward[0];
+
+            double brokenBlocks = cfgPlayerData.getDouble(brokenBlocksPath);
+
+            int boosterMultiplikator = 1;
+            if (currentBooster.contains("xp"))
+            {
+                boosterMultiplikator = 2;
+            }
+
+            // Aktueller Stand der XP
+            int xp = cfgPlayerData.getInt(path + ".xp");
+            int globalXP = cfgPlayerData.getInt(path + ".globalxp");
+
+            int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
+
+            // Geld abhängig vom aktuellen Level
+            double moneyToAdd = cfg.getDouble("jobsettings." + currentJob + ".money." + currentLevel, 0.0);
+            if (currentBooster.contains("geld"))
+            {
+                moneyToAdd *= 2;
+            }
 
             // Aktuelle XP + XP des abgebauten Blockes
             xp += xpToAdd * boosterMultiplikator;
@@ -152,19 +267,22 @@ public class blockbreaklistener implements Listener {
 
             }
 
+            brokenBlocks++;
 
             // Setzt es in den RAM
             cfgPlayerData.set(path + ".xp",xp);
             cfgPlayerData.set(path + ".globalxp",globalXP);
             cfgPlayerData.set(currentLevelConfig,currentLevel);
+            cfgPlayerData.set(brokenBlocksPath,brokenBlocks);
 
             // Setzt es auf die Festplatte
             Jobsystem.getInstance().savePlayerdata();
             Jobsystem.getInstance().saveConfig();
 
-            sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd * boosterMultiplikator);
+            sendActionbar(p,xp,xpNeeded,moneyToAdd,currentLevel,displayJob,xpToAdd * boosterMultiplikator);
         }
     }
+
     private void diggerJob(Material brokenBlock,String currentJob,UUID uuid,Player p,String displayJob)
     {
         if (diggerBlocks.containsKey(brokenBlock))
@@ -179,14 +297,31 @@ public class blockbreaklistener implements Listener {
             String prefix = cfg.getString("messages.prefix");
             String no_level_found = cfgMessages.getString("messages.no_config_found_error");
 
-            List<Integer> levels = cfg.getIntegerList("jobsettings.Diggerjob.level");
+            List<Integer> levels = cfg.getIntegerList("jobsettings." + currentJob + ".level");
 
             String path = "players." + uuid +"."+ currentJob;
             String xpForLevelUpConfig = path + ".xpNeeded";
             String currentLevelConfig = path + ".level";
+            String currentBoosterPath = "booster.active";
+
+            List<String> currentBooster = cfg.getStringList(currentBoosterPath);
+
+
+
+            String brokenBlocksPath = path + ".brokenblocks";
+
+
+            int boosterMultiplikator = 1;
+            if (currentBooster.contains("xp"))
+            {
+                boosterMultiplikator = 2;
+            }
+
 
             // XP des abgebauten Blockes
-            int xpToAdd = diggerBlocks.get(brokenBlock);
+            double[] reward = diggerBlocks.get(brokenBlock);
+
+            int xpToAdd = (int) reward[0];
 
             // Aktueller Stand der XP
             int xp = cfgPlayerData.getInt(path + ".xp");
@@ -194,6 +329,14 @@ public class blockbreaklistener implements Listener {
 
 
             int currentLevel = cfgPlayerData.getInt(currentLevelConfig,1);
+
+            // Geld abhängig vom aktuellen Level
+            double moneyToAdd = cfg.getDouble("jobsettings." + currentJob + ".money." + currentLevel, 0.0);
+            if (currentBooster.contains("geld"))
+            {
+                moneyToAdd *= 2;
+            }
+            double brokenBlocks = cfgPlayerData.getDouble(brokenBlocksPath);
 
             // Aktuelle XP + XP des abgebauten Blockes
             xp += xpToAdd;
@@ -226,17 +369,19 @@ public class blockbreaklistener implements Listener {
 
             }
 
+            brokenBlocks++;
 
             // Setzt es in den RAM
             cfgPlayerData.set(path + ".xp",xp);
             cfgPlayerData.set(path + ".globalxp",globalXP);
             cfgPlayerData.set(currentLevelConfig,currentLevel);
+            cfgPlayerData.set(brokenBlocksPath,brokenBlocks);
 
             // Setzt es auf die Festplatte
             Jobsystem.getInstance().savePlayerdata();
             Jobsystem.getInstance().saveConfig();
 
-            sendActionbar(p,xp,xpNeeded,currentLevel,displayJob,xpToAdd);
+            sendActionbar(p,xp,xpNeeded,moneyToAdd,currentLevel,displayJob,xpToAdd * boosterMultiplikator);
         }
     }
 
@@ -255,8 +400,8 @@ public class blockbreaklistener implements Listener {
 
     }
 
-    private void sendActionbar(Player p,int xp,int xpNeeded,int currentLevel,String displayJob,int xpToAdd)
+    private void sendActionbar(Player p,int xp,int xpNeeded,double moneyToAdd,int currentLevel,String displayJob,double xpToAdd)
     {
-        p.sendActionBar("§e+" +xpToAdd + " XP §8§l▪ §b" + displayJob + " §8§l▪ §7Level " + currentLevel + " §8▪ §7" + xp + "/" + xpNeeded + "XP");
+        p.sendActionBar("§e+" +xpToAdd + " XP §8§l▪ §a+"+ moneyToAdd  + "$ §8§l▪ §b" + displayJob + " §8§l▪ §7Level " + currentLevel + " §8▪ §7" + xp + "/" + xpNeeded + "XP");
     }
 }

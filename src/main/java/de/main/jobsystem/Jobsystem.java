@@ -3,11 +3,13 @@ package de.main.jobsystem;
 import de.main.jobsystem.Listener.*;
 import de.main.jobsystem.booster.booster;
 import de.main.jobsystem.commands.jobCommand;
+import de.main.jobsystem.payout.payoutmanager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
+import net.milkbowl.vault.economy.Economy;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +21,28 @@ public final class Jobsystem extends JavaPlugin {
     public FileConfiguration playerdata;
     public FileConfiguration gui;
     private File playerdataFile;
+    private static Economy economy;
+
+    private boolean setupEconomy() {
+
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+
+        if (rsp == null) {
+            return false;
+        }
+
+        economy = rsp.getProvider();
+
+        return economy != null;
+    }
+
+    public static Economy getEconomy() {
+        return economy;
+    }
 
     @Override
     public void onEnable() {
@@ -34,6 +58,15 @@ public final class Jobsystem extends JavaPlugin {
         messages = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "messages.yml"));
         playerdata = YamlConfiguration.loadConfiguration(new File(getDataFolder(), "playerdata.yml"));
         playerdataFile = new File(getDataFolder(), "playerdata.yml");
+
+        if (!setupEconomy()) {
+            getLogger().severe("Keine Economy über Vault gefunden!");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        // Startet den Payout
+        payoutmanager.sendMoney();
 
         if (!playerdataFile.exists()) {
             try {
