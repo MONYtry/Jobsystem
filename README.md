@@ -148,10 +148,6 @@ Contributions are welcome. If you want to improve the plugin, feel free to:
 3. Commit your changes
 4. Open a pull request
 
-## License
-
-This project currently does not specify a license. If you plan to publish or distribute it publicly, consider adding an open-source license such as MIT or GPL.
-
 ## Support
 
 If you need help with setup, configuration, or troubleshooting, feel free to open an issue in the repository.
@@ -159,5 +155,5 @@ If you need help with setup, configuration, or troubleshooting, feel free to ope
 ---
 
 <p align="center">
-  <sub>Made for Paper 1.21.8 • Jobsystem</sub>
+  <sub>Made for Paper 1.21.8 • Jobsystem by <a href="https://github.com/MONYtry">MONY</a></sub>
 </p>
